@@ -1,0 +1,13 @@
+//7 primitive types
+// objects
+
+// dynamic typing: we do not have to manually define the data type of the value stored in a variable. Instead, data types are determined automatically.
+// --> value has types, not variable
+
+// Number: floating point numbers -> used for decimals and integers;
+// String
+// Boolean
+// Undefined: value taken by a variable that is not yet defined('empty value');
+// Null
+//Symbol(ES2015): value that is unique and cannot be changed;
+// BigInt(ES2020): Larger integers than the Number type can hold.
