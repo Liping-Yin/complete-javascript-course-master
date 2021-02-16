@@ -173,10 +173,185 @@ console.log(o, c);
 
 */
 
-// Spread operator
+// ----Spread operator:works on all iterables, even Objects
+
+/*
 const arr = [7, 8, 9];
 const badArray = [1, 2, arr[0], arr[1], arr[2]];
 console.log(badArray);
 
 const newArray = [1, 2, ...arr];
 console.log(newArray);
+console.log(...arr);
+console.log(arr);
+
+const restaurant = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+  order: function (starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
+    );
+  },
+};
+const newMenu = [...restaurant.mainMenu, 'Gnocci'];
+console.log(newMenu);
+
+// application of spread
+//#1. copy array (shallow copy )
+const mainMenuCopy = [...restaurant.mainMenu];
+console.log(mainMenuCopy);
+
+//#2. join arrays
+
+const menu = [...restaurant.mainMenu, ...restaurant.starterMenu];
+console.log(menu);
+
+// iterables: array, string, map, set , but not object!
+const str = 'apple';
+const letters = [...str, ' ', 's.'];
+console.log(letters);
+// pass several  arguments into a function or built a new array; not work in template literals(since it doesn't expect multiple values separated by comma)
+// console.log(`${...arr}`); // error
+
+// pass several arguments
+const ingredients = [
+  prompt("let's make pasta! Ingredient 1?"),
+  prompt("let's make pasta! Ingredient 2?"),
+  prompt("let's make pasta! Ingredient 3?"),
+];
+
+console.log(ingredients);
+restaurant.orderPasta(ingredients[0], ingredients[1], ingredients[2]);
+restaurant.orderPasta(...ingredients);
+
+// objects
+const newRestaurant = { ...restaurant, founder: 'liping' };
+console.log(newRestaurant);
+
+// shallow copy objects
+const restaurantCopy = { ...restaurant };
+restaurantCopy.name = 'Liping Copy';
+console.log(restaurantCopy);
+console.log(restaurant);
+*/
+
+// -----------------Rest Pattern and Parameters-------
+/*
+const restaurant = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+  order: function (starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+  orderPizza: function (mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+  },
+  openingHours: {
+    thu: {
+      open: 12,
+      close: 22,
+    },
+    fri: {
+      open: 11,
+      close: 23,
+    },
+    sat: {
+      open: 0, // Open 24 hours
+      close: 24,
+    },
+  },
+};
+// opposite to the spread
+//Spread: because on RIGHT side of =
+const arr = [1, 2, ...[3, 4]];
+
+// REST: because on LEFT side of =
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(a, b, others);
+
+const [pizza, , risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, risotto, otherFood);
+
+// Objects
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
+
+// 2) Functions:  // similar to the spread, but here it is Rest
+// advantages: by doing so , users can pass several arguments or an array(if pass array, can spread first)
+const add = function (...numbers) {
+  console.log(numbers); // array
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  console.log(sum);
+};
+
+add(2, 3);
+add(5, 6, 7, 8);
+add(2, 5, 7, 8, 9, 40, 45);
+
+const x = [23, 4, 5, 6];
+add(...x); // SPREAD first then REST
+
+// pass REST arguments make it much easier and flexible to use
+restaurant.orderPizza('mushroom', 'onion', 'olives', 'spinach');
+
+restaurant.orderPizza('mushroom');
+*/
+
+// ------------ Short Circuiting (&& and ||)---------------
+/*
+// Use ANY data type, return ANY data type, short-circuiting
+
+console.log('----------OR-------------');
+// return first truthy value（ignore the rest）, if no then truthy value, then return last value
+console.log(3 || 'test'); //  3 : truthy value
+console.log('' || 'test'); // test
+console.log(true || 0); // true
+console.log(undefined || null); // null , even though null is not truthy value
+
+console.log(undefined || 0 || '' || 'Hello' || 23 || null); // 'Hello'
+
+// #1: normal way to deal with:
+const guest = restaurant.numGuests ? restaurant.numGuests : 10;
+console.log(guest);
+
+// #2: use short-circuit
+console.log(restaurant.numGusts || 10);
+
+console.log('----------AND-------------');
+//  find the first falsy value, if no falsy value then return last value
+console.log(0 && 'test'); // 0
+console.log(true && 'test'); // test
+
+// ------- Nullish coalescing Operator
+
+// nullish : null and undefined (not include 0 and '')
+
+// potential issue of using OR: '||'
+restaurant.numGuests = 0;
+const guest2 = restaurant.numGuests || 10;
+console.log(guest2); // 10, since 0 is falsy value
+
+// modify
+// ??: find the first not (null or '') value, similar as or
+const correctGuest = restaurant.numGuests ?? 10;
+console.log(correctGuest); // 0
+*/
+
+// Challenge
