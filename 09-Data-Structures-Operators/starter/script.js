@@ -243,7 +243,7 @@ console.log(restaurant);
 */
 
 // -----------------Rest Pattern and Parameters-------
-/*
+
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -312,7 +312,6 @@ add(...x); // SPREAD first then REST
 restaurant.orderPizza('mushroom', 'onion', 'olives', 'spinach');
 
 restaurant.orderPizza('mushroom');
-*/
 
 // ------------ Short Circuiting (&& and ||)---------------
 /*
@@ -354,4 +353,55 @@ const correctGuest = restaurant.numGuests ?? 10;
 console.log(correctGuest); // 0
 */
 
-// Challenge
+// Challenge: football betting app
+
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  odds: { team1: 1.33, x: 3.25, team2: 6.5 },
+  date: 'Nov 9th, 2021',
+};
+
+const [players1, players2] = game.players;
+
+const [gk1, ...fieldplayers1] = players1;
+const [gk2, ...fieldplayers2] = players2;
+
+const allPlayers = [...players1, ...players2];
+
+const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+
+const {
+  odds: { team1, x: draw, team2 },
+} = game;
+console.log(team1, draw, team2);
