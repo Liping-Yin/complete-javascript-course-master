@@ -29,6 +29,7 @@ const restaurant = {
   },
 };
 */
+// ===============Detructing============================
 
 //--------------  Destructuring Arrays -----------------
 /*
@@ -89,7 +90,7 @@ console.log(p1, q1, r1);
 
 */
 
-//--------------  Destructuring Objects -----------------
+//-----------------Destructuring Object-----------------
 /*
 const restaurant = {
   name: 'Classico Italiano',
@@ -173,7 +174,8 @@ console.log(o, c);
 
 */
 
-// ----Spread operator:works on all iterables, even Objects
+// --------------------Spread operator--------------------
+//works on all iterables, even Objects
 
 /*
 const arr = [7, 8, 9];
@@ -242,7 +244,9 @@ console.log(restaurantCopy);
 console.log(restaurant);
 */
 
-// -----------------Rest Pattern and Parameters-------
+/*
+
+// --------------- Rest Pattern and Parameters ----------
 
 const restaurant = {
   name: 'Classico Italiano',
@@ -313,8 +317,11 @@ restaurant.orderPizza('mushroom', 'onion', 'olives', 'spinach');
 
 restaurant.orderPizza('mushroom');
 
-// ------------ Short Circuiting (&& and ||)---------------
-/*
+*/
+
+/**
+// ============ Short Circuiting (&&, ||,??)=============
+
 // Use ANY data type, return ANY data type, short-circuiting
 
 console.log('----------OR-------------');
@@ -338,9 +345,10 @@ console.log('----------AND-------------');
 console.log(0 && 'test'); // 0
 console.log(true && 'test'); // test
 
-// ------- Nullish coalescing Operator
 
-// nullish : null and undefined (not include 0 and '')
+console.log('---------- ?? -------------');
+//  Nullish coalescing Operator
+//  Nullish : null and undefined (not include 0 and '')
 
 // potential issue of using OR: '||'
 restaurant.numGuests = 0;
@@ -354,7 +362,7 @@ console.log(correctGuest); // 0
 */
 
 // Challenge: football betting app
-
+/*
 const game = {
   team1: 'Bayern Munich',
   team2: 'Borrussia Dortmund',
@@ -405,3 +413,140 @@ const {
   odds: { team1, x: draw, team2 },
 } = game;
 console.log(team1, draw, team2);
+
+const printGoals = function (...players) {
+  console.log(players);
+  console.log(`${players.length} goals were scored`);
+};
+
+printGoals('Davis', 'Muller', 'Lewis');
+printGoals('Davis', 'Muller');
+printGoals(...game.scored);
+
+// use short circuit instead of if...else
+
+team1 < team2 && console.log('team1 is more likely to win');
+team1 > team2 && console.log('team2 is more likely to win');
+*/
+/*
+//=======================Looping =========================
+// ----- Looping Arrays: for-of Loop
+
+const items = [1, 2, 3, 4, 5];
+for (const item of items) console.log(item); // element
+for (const item of items.entries()) {
+  console.log(item); // element and index of each element
+  // console.log(item[0]); // index
+  // console.log(item[1]); // element value
+}
+//use destructure for convenience !!!
+
+for (const [index, ele] of items.entries()) {
+  console.log(`${index + 1}: ${ele}`);
+}
+
+// ------Enhanced Object Literals
+
+// #3：compute property names
+const weekdays = ['mon', 'tue', 'thu', 'fri', 'sat', 'sun'];
+const openingHours = {
+  [weekdays[2]]: {
+    open: 0,
+    close: 22,
+  },
+  [weekdays[3]]: {
+    open: 10,
+    close: 23,
+  },
+  [weekdays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [`day - ${2 + weekdays[4]}`]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+const restaurant = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+  // #1： ES6: Enhanced Object literals
+  openingHours,
+
+  // #2： enhanced way for function
+  order(starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  // #3：compute property names
+};
+console.log(restaurant);
+console.log(restaurant.order(0, 1));
+console.log(restaurant.openingHours);
+
+// ----Optional Chaining
+//normal ways to check an element exist
+if (restaurant.openingHours && restaurant.openingHours.mon) {
+  console.log(restaurant.openingHours.mon.open);
+} // not return anything when undefined or null
+
+// optional chaining
+console.log(restaurant.openingHours.mon?.open);
+console.log(restaurant.openingHours?.mon?.open);
+
+if (!restaurant.openingHours?.mon?.open) {
+  console.log("they doesn't exist");
+}
+
+// examples
+//#1.
+const days = ['mon', 'tue', 'thu', 'fri', 'sat', 'sun'];
+for (const day of days) {
+  // here use variable as a property should use [], not '.'
+  // since here day is not an actual property name, it is a variable
+  // const open = restaurant.openingHours[day]?.open || 'closed'; // even set a default value when undefined.
+  const open = restaurant.openingHours[day]?.open ?? 'closed'; // use ?? to avoid error when open = 0(falsy value if use ||)
+  console.log(`on day ${day}, we are open at ${open}`);
+}
+
+// #2.check if methods exists
+
+console.log(restaurant.order?.(0, 1) ?? "Method doesn't exist");
+
+// #3. Arrays
+const users = [{ name: 'Sam', email: 'jsgdjs@gmail.com' }];
+console.log(users[0]?.name ?? 'User array empty');
+
+// const alter = 2 < 3 ? 'y' : 'n';
+// console.log(alter);
+
+// -----------Looping Objects: Object keys, values, and Entries
+// even though Object is not iterable
+
+// ..keys
+const properties = Object.keys(openingHours);
+console.log(properties);
+console.log(`we are open for ${properties.length} days`);
+for (const day of Object.keys(openingHours)) {
+  console.log(day);
+}
+
+// ..values
+const values = Object.values(openingHours);
+console.log(values);
+//.. Entries: useful combination with destructuring
+const entries = Object.entries(openingHours);
+console.log(entries);
+// for (const i of entries) {
+//   console.log(i);
+// }
+for (const [key, { open, close }] of entries) {
+  console.log(`on ${key} we open at ${open} and close at ${close}`);
+}
+
+*/
+
+// Challenge #2.
