@@ -1,5 +1,4 @@
 'use strict';
-/*
 
 // Data needed for a later exercise
 const flights =
@@ -28,7 +27,7 @@ const restaurant = {
     },
   },
 };
-*/
+
 // ===============Detructing============================
 
 //--------------  Destructuring Arrays -----------------
@@ -578,3 +577,80 @@ const staffUnique = [...new Set(staff)]; // spread
 console.log(new Set(staff).size);
 
 console.log(new Set('Johnason').size);
+
+// ------------------ Map --------------------
+const rest = new Map();
+rest.set('name', 'Classico Italiano'); // key, value
+rest.set(1, 'Firenze, Italy');
+rest.set(2, 'Lisbon, Portugal');
+
+console.log(rest.set(3, 'Beijing, China'));
+console.log(rest);
+
+// alternate: chain
+rest
+  .set('categories', ['Italian', 'Creek', 'Chinese'])
+  .set(true, 'we are open')
+  .set(false, 'we are not open :(')
+  .set('open', 11)
+  .set('close', 23);
+
+console.log(rest.get(true));
+console.log(rest.get('open'));
+console.log(rest.get('name'));
+
+// interesting example
+const time = 21;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+console.log(rest.has('categories'));
+rest.delete('name');
+console.log(rest.size);
+
+// when use an array as key
+const arr = [1, 2];
+rest.set(arr, 'Test');
+// rest.set([1,2],'Test');
+//rest.get([1,2])// this won't work, since [1,2] is not the same object as before [1,2]; two different object in the heap
+
+console.log(rest.get(arr));
+const ele = document.querySelector('h1');
+rest.set(ele, 'Heading');
+console.log(rest.get(ele));
+
+// Initiate map
+//#1. array of arrays
+const question = new Map([
+  ['question', 'what is the correct answer？'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'Python'],
+  ['correct', 2],
+  [true, 'correct'],
+  [false, 'Try again'],
+]);
+
+console.log(question);
+
+//convert object to a map
+console.log(Object.entries(restaurant.openingHours));
+const hoursMap = new Map(Object.entries(restaurant.openingHours));
+console.log(hoursMap);
+
+// show the whole question and answer
+console.log(question.get('question'));
+for (const [key, value] of question) {
+  if (typeof key === 'number') console.log(`Answer ${key}; ${value}`);
+}
+3;
+const answer = prompt('what is your answer?');
+// always pay attention to the input type
+console.log(answer);
+
+console.log(question.get(question.get('correct') === Number(answer)));
+
+// convert Map to Array
+
+console.log([...question]);
+console.log([...question.keys()]);
+console.log([...question.values()]);
