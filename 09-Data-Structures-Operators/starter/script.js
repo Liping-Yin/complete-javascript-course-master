@@ -550,3 +550,31 @@ for (const [key, { open, close }] of entries) {
 */
 
 // Challenge #2.
+
+// ------------------- Set -------------------------------
+// unique values
+const orderSet = new Set(['Pasta', 'Pizza', 'Pizza', 'pizza']);
+console.log(orderSet);
+console.log(orderSet.size);
+console.log(orderSet.has('pizza'));
+orderSet.add('Pizza'); // ignored the same element
+orderSet.delete('pizza');
+console.log(orderSet);
+// iterate set ?
+// normally there is no need to get element out of set, we only check if an element is in the set.
+// instead we normally iterate array
+
+console.log();
+
+for (const order of orderSet) {
+  console.log(order);
+}
+console.log(new Set('Johnas'));
+
+// combine set and arrays: into practice
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager'];
+const staffUnique = [...new Set(staff)]; // spread
+
+console.log(new Set(staff).size);
+
+console.log(new Set('Johnason').size);
