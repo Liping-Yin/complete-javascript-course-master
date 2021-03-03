@@ -1,6 +1,6 @@
 # my Complete JavaScript Course
 
-This repo contains starter files and final code for all sections and projects contained in the course.
+This repo contains a master course about JavaScript from Udemy, which contains starter files and final code for all sections and projects contained in the course.
 The final code is implemented by myself that includes the content I selfstudy about JavaScript for web developing.
 
 ## All the projcts included in this self-study course.
