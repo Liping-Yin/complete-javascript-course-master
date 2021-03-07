@@ -48,7 +48,48 @@ document
   });
 
 //=============== Styles, Attribute and Classes =====
+// #style
+// in line style not stored in css file
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
 
+console.log(message.style.color); // won't show anything
+console.log(message.style.backgroundColor);
+
+//style stored in css file or even not exists in css file
+// in css file
+console.log(getComputedStyle(message).display);
+// not in css file
+console.log(getComputedStyle(message).height);
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height) + 40 + 'px'; // get number out of a string
+
+// change css file
+document.documentElement.style.setProperty('--color-primary', 'orange');
+
+// #Attribute
+const logo = document.querySelector('.nav__logo');
+
+console.log(logo.alt);
+// inline change
+logo.alt = 'beautiful logo I designed';
+//not standard attributes
+console.log(logo.designer); // undefined, since not standard attribute for this element
+console.log(logo.getAttribute('designer'));
+logo.setAttribute('company', 'Bankist');
+
+// compare two ways of access attributes
+console.log(logo.src); //absolute url
+console.log(logo.getAttribute('src')); // relative url
+
+// data attributes
+console.log(logo.dataset.versionNumber);
+
+// #classes
+logo.classList.add('c', 'd');
+logo.classList.remove('d');
+logo.classList.toggle('d');
+logo.classList.contains('d');
 //======= Modal window ======
 
 const modal = document.querySelector('.modal');
