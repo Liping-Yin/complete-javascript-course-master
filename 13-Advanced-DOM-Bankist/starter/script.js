@@ -122,16 +122,56 @@ document.addEventListener('keydown', function (e) {
 */
 
 /******************** Bankist Project ***************/
+
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 btnScrollTo.addEventListener('click', function (e) {
   const s1coords = section1.getBoundingClientRect();
   console.log(s1coords);
   console.log(e.target.getBoundingClientRect());
-  console.log('Current scroll(x/y)', window.pageXOffset, pageYOffset);
+  console.log('Current scroll(x/y)', window.pageXOffset, window.pageYOffset);
   console.log(
     'height/width viewport',
     document.documentElement.clientHeight,
     document.documentElement.clientWidth
   );
+
+  //---- scroll to specific element -----
+  // should use document coordinate
+  // method #1:
+  // window.scrollTo(
+  //   s1coords.left + window.pageXOffset,
+  //   s1coords.top + window.pageYOffset
+  // );
+
+  // method #2:
+  // scroll to option:dictionary
+  // browser internet explore doesn't support option parameter
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+
+  // method #3: modern js
+  section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+// ********* Types of Event and Event Handler *******
+
+// events are there related with DOM, add any event handler to an element in the DOM, we can deal with this event.
+
+// method #1: more practical
+const h1 = document.querySelector('h1');
+h1.addEventListener('mouseenter', function () {
+  alert('addEventListener: great! you got me!');
+});
+
+// method #2:
+
+const ele = document.querySelector('.header__title h4');
+const sayHi = function () {
+  alert('Hello!');
+  ele.removeEventListener('mouseenter', sayHi);
+};
+ele.onmouseenter = sayHi;
