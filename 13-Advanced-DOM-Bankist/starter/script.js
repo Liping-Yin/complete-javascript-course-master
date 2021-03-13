@@ -90,7 +90,13 @@ logo.classList.add('c', 'd');
 logo.classList.remove('d');
 logo.classList.toggle('d');
 logo.classList.contains('d');
-//======= Modal window ======
+
+
+*/
+
+/******************** Bankist Project ***************/
+
+//===================== Modal window ===================
 
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
@@ -119,9 +125,7 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-*/
-
-/******************** Bankist Project ***************/
+// ************* Scroll smoothly ******************
 
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
@@ -157,6 +161,33 @@ btnScrollTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
+// ************* Page navigation ******************
+
+//method #1: iterate trhough makes sense , but not efficient
+/*
+document.querySelectorAll('.nav__link').forEach(function (el) {
+  el.addEventListener('click', function (e) {
+    e.preventDefault(); // there is anchor in html file: href='';
+    const id = this.getAttribute('href');
+    // console.log(id);
+    // useful practice by keeping the href in htnl, and select this element , and scroll to somoothly
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+*/
+
+//method #2: use event delegation
+// keywords: parent element, matching strategy, target element
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log(e.target);
+  // Matching Strategy: hardest important part
+  if (e.target.classList.contains('nav__link')) {
+    console.log('Link');
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
 // ********* Types of Event and Event Handler *******
 
 // events are there related with DOM, add any event handler to an element in the DOM, we can deal with this event.
@@ -196,6 +227,7 @@ for (let elem of document.querySelectorAll('*')) {
 */
 
 //-------------- Event propagation -------------
+/*
 const randomInt = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);
 const randomColor = () =>
@@ -222,4 +254,32 @@ document.querySelector('.nav').addEventListener('click', function (e) {
   console.log('nav', e.target, e.currentTarget);
   this.style.backgroundColor = randomColor();
   console.log(e.currentTarget === this);
+});
+*/
+
+// ******** Traversing DOM **************
+// going downwards: child
+console.log(h1.querySelectorAll('.highlight')); // Nodelist
+console.log(h1.childNodes); // Nodelist:every child node
+console.log(h1.children); // HTMLCollection: all children element
+
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'orangered';
+
+// going upwards: parent
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+// document.closet() is very similar as querySelector()
+h1.closest('.header').style.background = 'var(--gradient-secondary)'; // all parent and parameter with specific element
+h1.closest('h1').style.background = 'var(--gradient-primary)';
+
+// Going sideways: siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+console.log(h1.previousSibling);
+console.log(h1.nextSibling);
+
+console.log(h1.parentElement.children);
+[...h1.parentElement.children].forEach(function (el) {
+  if (el !== h1) el.style.transform = 'scale(0.5)';
 });
