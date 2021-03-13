@@ -163,15 +163,63 @@ btnScrollTo.addEventListener('click', function (e) {
 
 // method #1: more practical
 const h1 = document.querySelector('h1');
-h1.addEventListener('mouseenter', function () {
+const showAlert = function (e) {
   alert('addEventListener: great! you got me!');
-});
+};
+h1.addEventListener('mouseenter', showAlert);
+// remove event handler anywhere
+setTimeout(() => {
+  h1.removeEventListener('mouseenter', showAlert);
+}, 3000);
 
 // method #2:
-
 const ele = document.querySelector('.header__title h4');
 const sayHi = function () {
   alert('Hello!');
-  ele.removeEventListener('mouseenter', sayHi);
 };
+
 ele.onmouseenter = sayHi;
+
+// method #3: add directly in HTML file, old way
+
+// -----------Bubbling and Capturing -----------
+/*
+// Capturing : event happen inside a document, iterate through the DOM stucture to find the element which activate the event
+for (let elem of document.querySelectorAll('*')) {
+  elem.addEventListener(
+    'click',
+    e => alert(` Capturing: ${elem.tagName}`),
+    true
+  );
+  elem.addEventListener('click', e => alert(`Bubbling: ${elem.tagName}`));
+}
+*/
+
+//-------------- Event propagation -------------
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+
+// target: the element actullay activate the event
+//this: the current element which is actually deal with the event
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  console.log('Link', e.target, e.currentTarget);
+  this.style.backgroundColor = randomColor();
+  console.log(e.currentTarget === this);
+  // stop propagation
+  e.stopPropagation(); // stop bubbling , but in practice it is not good to stop propagation, only when it is really necessary
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  console.log('container', e.target, e.currentTarget);
+  this.style.backgroundColor = randomColor();
+  console.log(e.currentTarget === this);
+});
+
+document.querySelector('.nav').addEventListener('click', function (e) {
+  console.log('nav', e.target, e.currentTarget);
+  this.style.backgroundColor = randomColor();
+  console.log(e.currentTarget === this);
+});
