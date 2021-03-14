@@ -102,6 +102,10 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnOpenModal = document.querySelectorAll('.btn--show-modal');
+const nav = document.querySelector('.nav');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+const h1 = document.querySelector('h1');
 
 const openModal = function () {
   modal.classList.remove('hidden');
@@ -127,8 +131,6 @@ document.addEventListener('keydown', function (e) {
 
 // ************* Scroll smoothly ******************
 
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
 btnScrollTo.addEventListener('click', function (e) {
   const s1coords = section1.getBoundingClientRect();
   console.log(s1coords);
@@ -193,7 +195,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // events are there related with DOM, add any event handler to an element in the DOM, we can deal with this event.
 
 // method #1: more practical
-const h1 = document.querySelector('h1');
+
 const showAlert = function (e) {
   alert('addEventListener: great! you got me!');
 };
@@ -317,3 +319,39 @@ tabsContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+// ******** Passing argument to Event Handler **********
+
+const changeOpacity = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== link) {
+        el.style.opacity = this;
+      }
+    });
+    logo.style.opacity = this;
+  }
+};
+//callback
+// nav.addEventListener('mouseover', function (e) {
+//   changeOpacity(e, 0.5);
+// });
+
+// Passing 'argument' into handler
+nav.addEventListener('mouseover', changeOpacity.bind(0.5));
+nav.addEventListener('mouseout', changeOpacity.bind(1));
+
+// ********** Sticky Navigation *****************
+
+// not efficent way to realize
+const initialCoords = section1.getBoundingClientRect();
+window.addEventListener('scroll', function () {
+  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+});
+
+// Intersection Oberver API
