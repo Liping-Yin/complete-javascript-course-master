@@ -258,6 +258,7 @@ document.querySelector('.nav').addEventListener('click', function (e) {
 */
 
 // ******** Traversing DOM **************
+/*
 // going downwards: child
 console.log(h1.querySelectorAll('.highlight')); // Nodelist
 console.log(h1.childNodes); // Nodelist:every child node
@@ -282,4 +283,37 @@ console.log(h1.nextSibling);
 console.log(h1.parentElement.children);
 [...h1.parentElement.children].forEach(function (el) {
   if (el !== h1) el.style.transform = 'scale(0.5)';
+});
+*/
+
+// ************ Tabbed Component ****************
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+// tabs.forEach(tab =>
+//   tab.addEventListener('click', function (e) {
+//     console.log(this);
+//   })
+// );
+
+// tabs.forEach(tab => tab.addEventListener('click', e => console.log(this)));// this is window by arrow function
+
+// use event delegation
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+  console.log(clicked);
+  // guard clause:check if the target area is clicked
+  // if clicked somewhere else, clicked will be null
+  if (!clicked) return;
+  //active tan
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active')); //remove previous active
+  clicked.classList.add('operations__tab--active'); //activate target
+  //active content
+  tabsContent.forEach(content =>
+    content.classList.remove('operations__content--active')
+  );
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
 });
