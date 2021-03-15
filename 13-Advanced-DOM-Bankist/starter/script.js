@@ -428,3 +428,11 @@ const imgObserver = new IntersectionObserver(loadImg, {
   rootMargin: '-200px', // let loading picture beforehand
 });
 imgTargets.forEach(img => imgObserver.observe(img));
+
+/***************** Slider Component ******************/
+
+/****** Efficient Script Loading: defer and async ********/
+// Regular: end of the body, Scripts are fetched and executed after the HTML is completely parsed.
+// Modern Javascript
+// Async:in the head,Scripts are fetched asynchronously and executed immediately,ususally the DOMContentLoaded event waits for all scripts to execute, except for async scripts. So, DOMContentLoaded does not wait for async script. Script not guaranteed to execute in order
+// Defer:in the dead,scripts are fetched asynchronously and executed after the HTML is completely parsed. DOMContentLoaded event fires after defer script is executed.Script are executed in order.
