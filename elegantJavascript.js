@@ -72,3 +72,62 @@ function countBs(string) {
 */
 
 // -----------Data Structures : Objects and Arrays --------
+// SUM OF A RANGE
+function range(start, end, step = start < end ? 1 : -1) {
+  let array = [];
+  if (step > 0) {
+    for (let i = start; i <= end; i += step) {
+      array.push(i);
+    }
+  } else {
+    for (let i = start; i >= end; i += step) {
+      array.push(i);
+    }
+  }
+
+  return array;
+}
+
+function sum(arr) {
+  let total = 0;
+  for (let i of arr) {
+    total += i;
+  }
+  return total;
+}
+
+console.log(range(1, 10));
+console.log(range(5, 2, -1));
+console.log(sum(range(1, 10)));
+
+// REVERSE AN ARRAY
+function reverseArray(arr) {
+  let newArray = [];
+  for (let element of arr) {
+    newArray.unshift(element);
+  }
+  return newArray;
+}
+
+// function reverseArray(arr) {
+//   let output = [];
+//   for (let i = arr.length - 1; i >= 0; i--) {
+//     output.push(arr[i]);
+//   }
+//   return output;
+// }
+
+function reverseArrayInPlace(arr) {
+  const middlePoint = Math.floor(arr.length / 2);
+  for (i = 0; i < middlePoint; i++) {
+    let temp = arr[i];
+    arr[i] = arr[arr.length - 1 - i];
+    arr[arr.length - 1 - i] = temp;
+  }
+  return arr;
+}
+
+console.log(reverseArray([1, 2, 3]));
+console.log(reverseArrayInPlace(["a", "b", "c"]));
+
+// A LIST
