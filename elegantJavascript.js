@@ -69,7 +69,7 @@ function countBs(string) {
   return countChar(string, "B");
 }
 
-*/
+
 
 // -----------Data Structures : Objects and Arrays --------
 // SUM OF A RANGE
@@ -130,4 +130,26 @@ function reverseArrayInPlace(arr) {
 console.log(reverseArray([1, 2, 3]));
 console.log(reverseArrayInPlace(["a", "b", "c"]));
 
-// A LIST
+// A LIST ...continue...
+
+*/
+
+// --------- higher order functions ------------
+// Falttening: reduce, concat
+let arrays = [[1, 2, 3], [4, 5], [6]];
+console.log(arrays.reduce((flat, current) => flat.concat(current), []));
+
+// My own loop: higher order function loop
+function loop(start, test, update, body) {
+  for (let value = start; test(value); value = update(value)) {
+    body(value);
+  }
+}
+loop(
+  3,
+  (n) => n > 0,
+  (n) => n - 1,
+  console.log
+);
+
+// Everything
