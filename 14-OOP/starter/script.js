@@ -40,7 +40,10 @@ console.log(Person.prototype);
 
 // try to understand all this relationship
 console.log(Object.getPrototypeOf(icylove));
+console.dir(Person.prototype.constructor);
 console.log(icylove.__proto__);
+console.log(icylove.__proto__.__proto__);
+
 console.log(icylove.__proto__ === Person.prototype); // true: this step is realized by the link
 console.log(Person.prototype.isPrototypeOf(Person)); //false
 console.log(Person.prototype.isPrototypeOf(icylove)); // true
