@@ -85,6 +85,10 @@ carMercedes.brake();
 */
 
 /////////////////// #2：ES6 Classes ////////////////////
+
+/**
+ 
+
 // 1: class expression
 //const PersonCl = class {};//class is a specail function
 // 2: class declaration
@@ -108,11 +112,12 @@ console.log(icyloveCl.hasOwnProperty('birthYear'));
 console.log(icyloveCl.__proto__ === PersonCl.prototype);
 
 // Attentions:
-/**
- * 1.Classes are NOT hoisted, so have to declare first before use it
- * 2.Class are firt-class citizens
- * 3.Classes are executed in strict mode
- */
+
+// 1.Classes are NOT hoisted, so have to declare first before use it
+// 2.Class are firt-class citizens
+// 3.Classes are executed in strict mode
+
+/////// setters and getters
 
 // every object can have its own getter and setter properties, not like a methods, when you call it
 const account = {
@@ -144,16 +149,138 @@ class Toy {
   get fullName() {
     return this._fullName;
   }
+  // instance methods, will be added to .prototype property
+  dance() {
+    console.log('I am dancing now ');
+  }
+  // static method: not available for instance objects
+  static sleep() {
+    console.log('I am sleeping');
+  }
 }
 
 const cat = new Toy('icylove bear', 3);
-const fox = new Toy('fox', 4);
+// const fox = new Toy('fox', 4);
 
 // cat.fullName = 'icylove the cat';
 console.log(cat);
-console.log(fox);
+// console.log(fox);
 // console.log(cat.fullName);
 // console.log(cat.name);
 // console.log(cat._name);
 
+// ///////// Static Methods
+//e.g.: Array.from()
+// can't be heritant to the object
+//  Create static methods
+
+// # 1: use property
+// # 2: use static key world
+
+Toy.hey = function () {
+  console.log('I am a static function of Toy say hey');
+};
+
+Toy.hey();
+const horse = new Toy('horsie toy', 4);
+console.log(horse);
+horse.hey(); // won't work
+console.dir(Toy);
+
+ */
+
 //////////////////// #3: Object.create() //////////////
+
+/* 
+//////// inheritance between 'classes'
+// #1: use constructor function
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2021 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+// linking prototype
+Student.prototype = Object.create(Person.prototype);
+
+//sequence matters, if not link first, then it can override
+Student.prototype.introduce = function () {
+  console.log(`my name is ${this.firstName} and study ${this.course}`);
+};
+
+const mike = new Student('Mike', 2000, 'CS');
+console.log(mike);
+mike.introduce();
+console.log(mike instanceof Student);
+console.log(mike instanceof Person);
+// fix Object.create() issue
+
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor);
+
+
+//////////////////////////////////////////
+
+// Coding challenge
+const Car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+};
+
+Car.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(`${this.maker} is going at ${this.speed} km/h`);
+};
+
+Car.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(`${this.make} is going at ${this.speed} km/h`);
+};
+
+const EV = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+};
+
+EV.prototype = Obeject.create(Car.prototype);
+
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+};
+EV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge--;
+  console.log(
+    `${this.maker} is going at ${this.speed} km/h, with a charge of ${this.charge}`
+  );
+};
+
+const tesla = new EV('Tesla', 120, 23);
+tesla.accelerate();// method in the closest prototype in the chain will be called, this is why child class override the method
+
+*/
+
+//#2: ES6 inheritance between classes
+
+class Animal {
+  constructor(species, age) {
+    this.species = species;
+    this.age = age;
+  }
+}
+
+class Snake extends Animal {
+  constructor(species, age, legs) {
+    // Always need to happen first: super()
+    super(species, age);
+    this.legs = legs; // if no additional parameters needed, then this super is not necessary, it will automaticaly called
+  }
+}
