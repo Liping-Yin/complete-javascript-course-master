@@ -284,3 +284,5 @@ class Snake extends Animal {
     this.legs = legs; // if no additional parameters needed, then this super is not necessary, it will automaticaly called
   }
 }
+
+//#3: Object.create() -> OOP to the next level
